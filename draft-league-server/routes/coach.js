@@ -16,7 +16,7 @@ const { v4: uuidv4 } = require('uuid');
 
 router.get('/', async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM coach');
+    const { rows } = await db.query('SELECT * FROM league.coach');
     res.json(rows);
   } catch (err) {
     console.error('Error fetching coaches:', err);
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
   const id = uuidv4(); // Generate a new UUID for the coach ID
   try {
     const query = `
-      INSERT INTO coach (id, username, discord_user_id, showdown_name, sprite_url, theme)
+      INSERT INTO league.coach (id, username, discord_user_id, showdown_name, sprite_url, theme)
       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
     const values = [id, username, discord_user_id, showdown_name, sprite_url, theme];
     const { rows } = await db.query(query, values);
@@ -47,7 +47,7 @@ router.put('/:id', async (req, res) => {
   const { username, discord_user_id, showdown_name, sprite_url, theme } = req.body;
   try {
     const query = `
-      UPDATE coach
+      UPDATE league.coach
       SET username = COALESCE($1, username),
           discord_user_id = COALESCE($2, discord_user_id),
           showdown_name = COALESCE($3, showdown_name),
@@ -71,7 +71,7 @@ router.put('/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const coachId = req.params.id;
   try {
-    const { rows } = await db.query('SELECT * FROM coach WHERE id = $1', [coachId]);
+    const { rows } = await db.query('SELECT * FROM league.coach WHERE id = $1', [coachId]);
     if (rows.length === 0) {
       return res.status(404).json({ error: 'Coach not found' });
     }

@@ -15,7 +15,7 @@ const db = require('../PGDB.js');
 
 router.get('/', async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM leagues');
+    const { rows } = await db.query('SELECT * FROM league.league');
     res.json(rows);
   } catch (err) {
     console.error('Error fetching leagues:', err);
@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
     const { name, commissioner_id, min_team_size, max_team_size, format } = req.body;
     try {
         const query = `
-        INSERT INTO leagues (name, commissioner_id, min_team_size, max_team_size, format)
+        INSERT INTO league.league (name, commissioner_id, min_team_size, max_team_size, format)
         VALUES ($1, $2, $3, $4, $5) RETURNING *`;
         const values = [name, commissioner_id, min_team_size, max_team_size, format];
         const { rows } = await db.query(query, values);
@@ -44,7 +44,7 @@ router.put('/:id', async (req, res) => {
     const { name, commissioner_id, min_team_size, max_team_size, format } = req.body;
     try {
         const query = `
-        UPDATE leagues
+        UPDATE league.league
         SET name = COALESCE($1, name),
             commissioner_id = COALESCE($2, commissioner_id),
             min_team_size = COALESCE($3, min_team_size),
@@ -67,7 +67,7 @@ router.put('/:id', async (req, res) => {
 router.get('/:id', async (req, res) => {
     const leagueId = req.params.id;
     try {
-        const { rows } = await db.query('SELECT * FROM leagues WHERE id = $1', [leagueId]);
+        const { rows } = await db.query('SELECT * FROM league.league WHERE id = $1', [leagueId]);
         if (rows.length === 0) {
             return res.status(404).json({ error: 'League not found' });
         }
