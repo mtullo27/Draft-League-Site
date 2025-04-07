@@ -18,6 +18,7 @@ var kill_leadersRouter = require('./routes/kill_leaders');
 var leagueRouter = require('./routes/league');
 var player_statsRouter = require('./routes/player_stats');
 var rosterRouter = require('./routes/roster');
+var tierRouter = require('./routes/tier');
 
 var app = express();
 
@@ -42,5 +43,6 @@ app.use('/kill_leaders', kill_leadersRouter);
 app.use('/league', leagueRouter);
 app.use('/player_stats', player_statsRouter);
 app.use('/league/roster', rosterRouter);
+app.use('/league/tier', tierRouter);
 
 module.exports = app;
