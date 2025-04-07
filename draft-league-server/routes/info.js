@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const id = req.params.id;
-  const { league_id, value, version, id, key } = req.body;
+  const { league_id, value, version, key } = req.body;
   try {
     const query = `
       UPDATE league.info

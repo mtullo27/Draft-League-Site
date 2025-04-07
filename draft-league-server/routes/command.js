@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const id = req.params.id;
-  const { id, command_text } = req.body;
+  const { command_text } = req.body;
   try {
     const query = `
       UPDATE command.command

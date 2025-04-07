@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const id = req.params.id;
-  const { event_text, id } = req.body;
+  const { event_text } = req.body;
   try {
     const query = `
       UPDATE audit.event

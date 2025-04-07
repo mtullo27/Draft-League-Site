@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const id = req.params.id;
-  const { id, coach_id, timestamp, event_id, audit_text } = req.body;
+  const {coach_id, timestamp, event_id, audit_text } = req.body;
   try {
     const query = `
       UPDATE audit.audit_log

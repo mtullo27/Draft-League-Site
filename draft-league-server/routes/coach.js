@@ -24,6 +24,36 @@ router.get('/', async (req, res) => {
   }
 });
 
+//get coach teams from league.v_coaches_teams
+router.get('/teams/:id', async (req, res) => {
+  const coachId = req.params.id;
+  try {
+    const { rows } = await db.query('SELECT * FROM league.v_coaches_teams WHERE coach_id = $1', [coachId]);
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Coach not found' });
+    }
+    res.json(rows);
+  } catch (err) {
+    console.error('Error fetching coach teams:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//get all teams in a league by league id from league.v_coaches_teams
+router.get('/teams/league/:id', async (req, res) => {
+  const leagueId = req.params.id;
+  try {
+    const { rows } = await db.query('SELECT * FROM league.v_coaches_teams WHERE league_id = $1', [leagueId]);
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'League not found' });
+    }
+    res.json(rows);
+  } catch (err) {
+    console.error('Error fetching league teams:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 //dynamic post request to add a coach
 router.post('/', async (req, res) => {
   const { username, discord_user_id, showdown_name, sprite_url, theme } = req.body;

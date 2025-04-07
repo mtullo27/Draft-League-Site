@@ -78,5 +78,36 @@ router.get('/:id', async (req, res) => {
     }}
 );
 
+//get all teams in a league by league id from league.v_coaches_teams
+router.get('/teams/:id', async (req, res) => {
+    const leagueId = req.params.id;
+    try {
+      const { rows } = await db.query('SELECT * FROM league.v_coaches_teams WHERE league_id = $1', [leagueId]);
+      if (rows.length === 0) {
+        return res.status(404).json({ error: 'League not found' });
+      }
+      res.json(rows);
+    } catch (err) {
+      console.error('Error fetching league teams:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+//get all league stats from league.v_league_coach_stats
+router.get('/stats/:id', async (req, res) => {
+    const leagueId = req.params.id;
+    try {
+      const { rows } = await db.query('SELECT * FROM league.v_league_coach_stats WHERE league_id = $1', [leagueId]);
+      if (rows.length === 0) {
+        return res.status(404).json({ error: 'League not found' });
+      }
+      res.json(rows);
+    } catch (err) {
+      console.error('Error fetching league stats:', err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
 module.exports = router;
+
 
