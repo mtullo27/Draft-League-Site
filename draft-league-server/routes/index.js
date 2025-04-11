@@ -2,14 +2,6 @@ var express = require('express');
 var router = express.Router();
 const db = require('../PGDB.js');
 
-/*
- Table Definitions
-"column_name"	"data_type"	"is_nullable"
-"id"	"bigint"	"NO"
-"tier_text"	"text"	"NO"
-"pokemon"	"text"	"NO"
-"league_id"	"text"	"NO"
-*/
 
 //pass in table name and will return column defintions
 export async function getTableDefinition(tableName) {
