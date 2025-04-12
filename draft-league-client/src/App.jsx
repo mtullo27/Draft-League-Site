@@ -1,33 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
 import './App.css'
 
+import PokemonPic from './components/pokemon/pokemonPic'
+
+import { getTierData } from './routes/leagueRoutes'
+import { setTiers } from './slices/leagueSlice'
+
+import { getPokedex } from './routes/pokedexRoutes'
+import { setPokedexData } from './slices/pokedexSlice'
+
+
 function App() {
-  const [count, setCount] = useState(0)
+  const dispatch = useDispatch()
+  const league = useSelector((state) => state.league)
+  const pokedex = useSelector((state) => state.pokedex)
+
+  useEffect(() => {
+    async function fetchPokedexData() {
+      try {
+        const data = await getPokedex()
+        dispatch(setPokedexData(data))
+      } catch (error) {
+        console.error('Error fetching pokedex data:', error)
+      }
+    }
+    fetchPokedexData()
+  }, [])
+
+async function fetchData() {
+  try {
+    const data = await getTierData('league-05460626-f230-426f-bb1e-78556e4b0335')
+    dispatch(setTiers(data))
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
+  const handleClick = () => {
+    fetchData()
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <h1>Draft League Client</h1>
+        <h2>League</h2>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className="card">
+        <button onClick={() => handleClick()}>
+          {league? "yes" : "no"}
+        </button>
+      </div>
     </>
   )
 }

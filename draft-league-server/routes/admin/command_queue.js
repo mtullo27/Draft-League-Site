@@ -1,51 +1,51 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../PGDB.js');
+const db = require('../../PGDB.js');
 
 router.get('/', async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM league.draft');
+    const { rows } = await db.query('SELECT * FROM command.command_queue');
     res.json(rows);
   } catch (err) {
-    console.error('Error fetching draft:', err);
+    console.error('Error fetching command_queue:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 router.post('/', async (req, res) => {
-  const { pokemon_id, coach_id, pic_number, id } = req.body;
+  const { arguments, timestamp, coach_id, id } = req.body;
   try {
     const query = `
-      INSERT INTO league.draft (pokemon_id, coach_id, pic_number, id)
+      INSERT INTO command.command_queue (arguments, timestamp, coach_id, id)
       VALUES ($1, $2, $3, $4) RETURNING *`;
-    const values = [pokemon_id, coach_id, pic_number, id];
+    const values = [arguments, timestamp, coach_id, id];
     const { rows } = await db.query(query, values);
     res.status(201).json(rows[0]);
   } catch (err) {
-    console.error('Error inserting into draft:', err);
+    console.error('Error inserting into command_queue:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 router.put('/:id', async (req, res) => {
   const id = req.params.id;
-  const { pokemon_id, coach_id, pic_numbers } = req.body;
+  const { arguments, timestamp, coach_id } = req.body;
   try {
     const query = `
-      UPDATE league.draft
-      SET pokemon_id = COALESCE($1, pokemon_id),
-        coach_id = COALESCE($2, coach_id),
-        pic_number = COALESCE($3, pic_number),
+      UPDATE command.command_queue
+      SET arguments = COALESCE($1, arguments),
+        timestamp = COALESCE($2, timestamp),
+        coach_id = COALESCE($3, coach_id),
         id = COALESCE($4, id)
       WHERE id = ${5} RETURNING *`;
-    const values = [pokemon_id, coach_id, pic_number, id, id];
+    const values = [arguments, timestamp, coach_id, id, id];
     const { rows } = await db.query(query, values);
     if (rows.length === 0) {
-      return res.status(404).json({ error: 'draft not found' });
+      return res.status(404).json({ error: 'command_queue not found' });
     }
     res.json(rows[0]);
   } catch (err) {
-    console.error('Error updating draft:', err);
+    console.error('Error updating command_queue:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

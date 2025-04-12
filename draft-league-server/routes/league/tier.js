@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../PGDB.js');
+const db = require('../../PGDB.js');
 
 /*
  Table Definitions
@@ -14,7 +14,7 @@ const db = require('../PGDB.js');
 // Get all tiers
 router.get('/', async (req, res) => {
   try {
-    const { rows } = await db.query('SELECT * FROM league.tier');
+    const { rows } = await db.query('SELECT * FROM league.v_pokedex_with_tier');
     res.json(rows);
   } catch (err) {
     console.error('Error fetching tier:', err);
@@ -57,6 +57,26 @@ router.put('/:id', async (req, res) => {
     res.json(rows[0]);
   } catch (err) {
     console.error('Error updating tier:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//get teirs by league id
+router.get('/search/:league_id', async (req, res) => {
+  const league_id = req.params.league_id;
+  try {
+    const query = `
+      SELECT * FROM league.v_pokedex_with_tier
+      WHERE league_id = $1
+      ORDER BY tier_text DESC`;
+    const values = [league_id];
+    const { rows } = await db.query(query, values);
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'No tiers found for this league' });
+    }
+    res.json(rows);
+  } catch (err) {
+    console.error('Error fetching tiers by league:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

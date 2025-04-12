@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../PGDB.js');
-
+const db = require('../../PGDB.js');
 /* 
 "column_name"	"data_type"	"is_nullable"
 "id"	"text"	"NO"
@@ -39,7 +38,7 @@ router.post('/', async (req, res) => {
 );
 
 //dynamic update to only update the fields that are passed in
-router.put('/:id', async (req, res) => {
+router.put('/insert/:id', async (req, res) => {
     const leagueId = req.params.id;
     const { name, commissioner_id, min_team_size, max_team_size, format } = req.body;
     try {
@@ -64,7 +63,7 @@ router.put('/:id', async (req, res) => {
 );
 
 //get league by id
-router.get('/:id', async (req, res) => {
+router.get('/search/:id', async (req, res) => {
     const leagueId = req.params.id;
     try {
         const { rows } = await db.query('SELECT * FROM league.league WHERE id = $1', [leagueId]);

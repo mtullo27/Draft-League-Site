@@ -32,7 +32,7 @@ router.put('/', async (req, res) => {
 });
 
 //select by pokemon_name
-router.get('/:pokemon_name', async (req, res) => {
+router.get('/search/:pokemon_name', async (req, res) => {
   const pokemonName = req.params.pokemon_name;
   try {
     const { rows } = await db.query('SELECT * FROM public.pokedex WHERE pokemon_name = $1', [pokemonName]);
@@ -42,6 +42,19 @@ router.get('/:pokemon_name', async (req, res) => {
     res.json(rows[0]);
   } catch (err) {
     console.error('Error fetching Pokemon:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/with_tiers', async (req, res) => {
+  try {
+    const { rows } = await db.query('SELECT * FROM league.v_pokedex_with_tier');
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Pokedex not found' });
+    }
+    res.json(rows);
+  } catch (err) {
+    console.error('Error fetching Pokedex:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

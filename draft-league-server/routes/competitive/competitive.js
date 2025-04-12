@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../PGDB.js');
+const db = require('../../PGDB.js');
 
 //get all sets from competitive.pokemon_sets
 router.get('/', async (req, res) => {
