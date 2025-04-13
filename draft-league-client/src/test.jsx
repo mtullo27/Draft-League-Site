@@ -3,30 +3,27 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import './App.css'
 
-import Tier from './components/tierList/tier'
+import SetPic from './components/pokemon/pokemonPic'
 
-import { getPokedex } from './routes/pokedexRoutes'
-import { setPokedexData, setTiers } from './slices/pokedexSlice'
+import { getCompetitiveData } from './routes/competitiveRoutes'
+import { setCompetitiveData, selectCompetitiveData } from './slices/competitiveSlice'
 
 
 function Test() {
     const dispatch = useDispatch()
     const league = useSelector((state) => state.league)
-    const pokedex = useSelector((state) => state.pokedex)
+    const sets = selectCompetitiveData()
 
     useEffect(() => {
-        async function fetchPokedexData() {
+        async function fetchData() {
             try {
-                const data = await getPokedex()
-                dispatch(setPokedexData(data))
-                //select uniquie teir_text from the data and set it to the league slice
-                const uniqueTiers = [...new Set(data.map(tier => tier.tier_text).sort((a, b) => b.localeCompare(a, undefined, { numeric: true })))]
-                dispatch(setTiers(uniqueTiers))
+                const data = await getCompetitiveData()
+                dispatch(setCompetitiveData(data))
             } catch (error) {
                 console.error('Error fetching pokedex data:', error)
             }
         }
-        fetchPokedexData()
+        fetchData()
     }, [league.tiers])
 
     return (
@@ -35,13 +32,12 @@ function Test() {
                 <h1>Draft League Client</h1>
                 <div className="flex flex-row gap-6"> {/* Added gap-6 for spacing */}
                     {
-                        pokedex.tiers.filter((tier) => tier.localeCompare('99', undefined, { numeric: true })).map((tier) => {
-                            return (
-                                <div key={tier} className="p-4"> {/* Added padding for additional spacing */}
-                                    <Tier tier={tier} />
-                                </div>
-                            )
-                        })
+                        sets?.map((pokemon) => (
+                            <div key={pokemon.pokemon_name} className="flex flex-col items-center"> {/* Added flex-col for vertical alignment */}
+                                <SetPic src={pokemon.sprite_url} alt={pokemon.pokemon_name} />
+                                <h2>{pokemon.pokemon_name}</h2> {/* Displaying the Pokemon name */}
+                            </div>
+                        ))
                     }
                 </div>
             </div>
