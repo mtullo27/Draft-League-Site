@@ -13,6 +13,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+//get all sets with pokedex data from competitive.pokemon_sets
+router.get('/pokedex', async (req, res) => {
+  try {
+    const { rows } = await db.query('SELECT * FROM competitive.pokemon_sets_with_pokedex');
+    res.json(rows);
+  } catch (err) {
+    console.error('Error fetching pokemon sets with pokedex data:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 //get by pokemon_name
 router.get('/search/:pokemon_name', async (req, res) => {
   const pokemonName = req.params.pokemon_name;

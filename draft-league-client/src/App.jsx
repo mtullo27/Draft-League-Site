@@ -3,13 +3,16 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import './App.css'
 
-import PokemonPic from './components/pokemon/pokemonPic'
+import SetPic from './components/pokemon/pokemonPic'
 
 import { getTierData } from './routes/leagueRoutes'
 import { setTiers } from './slices/leagueSlice'
 
 import { getPokedex } from './routes/pokedexRoutes'
 import { setPokedexData } from './slices/pokedexSlice'
+
+import { setCompetitiveData, selectCompetitiveData } from './slices/competitiveSlice'
+import { getCompetitiveData } from './routes/competitiveRoutes'
 
 
 function App() {
@@ -21,6 +24,8 @@ function App() {
     async function fetchPokedexData() {
       try {
         const data = await getPokedex()
+        const setData = await getCompetitiveData()
+        dispatch(setCompetitiveData(setData))
         dispatch(setPokedexData(data))
       } catch (error) {
         console.error('Error fetching pokedex data:', error)

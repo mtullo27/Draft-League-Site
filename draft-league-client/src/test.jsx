@@ -10,7 +10,7 @@ import { setActiveId } from './slices/leagueSlice'
 function Test() {
     const dispatch = useDispatch()
     const league = useSelector((state) => state.league)
-    const pokedex = useSelector((state) => state.pokedex)
+    const sets = selectCompetitiveData()
 
     useEffect(() => {
         async function fetchLeagueData() {
