@@ -34,14 +34,27 @@ function App() {
     fetchPokedexData()
   }, [])
 
-async function fetchData() {
-  try {
-    const data = await getTierData('league-05460626-f230-426f-bb1e-78556e4b0335')
-    dispatch(setTiers(data))
-  } catch (error) {
-    console.error('Error fetching data:', error)
+  useEffect(() => {
+    async function fetchLeagueData() {
+      try {
+        const data = await getActiveLeague()
+        dispatch(setActiveId(data))
+      } catch (error) {
+        console.error('Error fetching league data:', error)
+      }
+    }
+    fetchLeagueData()
   }
-}
+    , [])
+
+  async function fetchData() {
+    try {
+      const data = await getTierData('league-05460626-f230-426f-bb1e-78556e4b0335')
+      dispatch(setTiers(data))
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
   const handleClick = () => {
     fetchData()
   }
@@ -54,7 +67,7 @@ async function fetchData() {
       </div>
       <div className="card">
         <button onClick={() => handleClick()}>
-          {league? "yes" : "no"}
+          {league ? "yes" : "no"}
         </button>
       </div>
     </>

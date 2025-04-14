@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../PGDB.js');
+const db = require('../../PGDB.js');
 
 router.get('/', async (req, res) => {
   try {
@@ -47,6 +47,16 @@ router.put('/:id', async (req, res) => {
     res.json(rows[0]);
   } catch (err) {
     console.error('Error updating info:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/active', async (req, res) => {
+  try {
+    const { rows } = await db.query('SELECT * FROM public.info');
+    res.json(rows);
+  } catch (err) {
+    console.error('Error fetching active info:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
