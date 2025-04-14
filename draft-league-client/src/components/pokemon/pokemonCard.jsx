@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import PokemonName from "./pokemonName";
 import PokemonPic from "./pokemonPic";
 
-const PokemonCard = ({ pokemon }) => {
+const PokemonCard = ({ pokemon, backgroound }) => {
     const pokedex = useSelector((state) => state.pokedex.data);
     const pokemonData = pokedex.find((poke) => poke.id === pokemon.id);
 
@@ -11,7 +11,7 @@ const PokemonCard = ({ pokemon }) => {
     }
 
     return (
-        <div className="flex flex-row justify-center items-center rounded-lg shadow-md">
+        <div className="flex flex-row justify-center items-center rounded-lg shadow-md mt-1 border-solid outline-4 outline-[#5e5e5e]" style={{ backgroundColor: backgroound }}>
             <div className="basis-1/3">
                 <PokemonPic src={pokemonData.sprite_url} alt={pokemon.pokemon_name} />
             </div>

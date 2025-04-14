@@ -3,9 +3,10 @@ import { leagueSlice } from './slices/leagueSlice'
 import { pokedexSlice } from './slices/pokedexSlice'
 
 const store = configureStore({
-  reducer: { league: leagueSlice.reducer,
-    pokedex: pokedexSlice.reducer 
-   }
+  reducer: {
+    league: leagueSlice.reducer,
+    pokedex: pokedexSlice.reducer
+  }
 
 })
 

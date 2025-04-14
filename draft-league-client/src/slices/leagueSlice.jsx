@@ -3,12 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 export const leagueSlice = createSlice({
     name: "league",
     initialState: {
+        activeId: '',
         info: [],
         roster: [],
         tiers: [],
-        tier_values:[]
+        tier_values: []
     },
     reducers: {
+        setActiveId: (state, action) => {
+            state.activeId = action.payload;
+        },
         setLeagueInfo: (state, action) => {
             state.info = action.payload;
         },
@@ -16,16 +20,17 @@ export const leagueSlice = createSlice({
             state.roster = action.payload;
         },
         setTiers: (state, action) => {
-            state.tiers = action.payload; 
+            state.tiers = action.payload;
         },
         setTierValues: (state, action) => {
-            state.tier_values = action.payload; 
+            state.tier_values = action.payload;
         },
     }
 })
 
-export const { setLeagueInfo, setRoster, setTiers, setTierValues } = leagueSlice.actions;
+export const { setActiveId, setLeagueInfo, setRoster, setTiers, setTierValues } = leagueSlice.actions;
 
+export const selectActiveId = (state) => state.league.activeId;
 export const selectLeagueInfo = (state) => state.league.info;
 export const selectRoster = (state) => state.league.roster;
 export const selectTiers = (state) => state.league.tiers;

@@ -4,17 +4,6 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-/* lavendar primary with light and dark mode for backgrounds */
-@theme{
-  
-}
 @layer base {
   body {
     background-color: #f3f4f6; /* light mode */

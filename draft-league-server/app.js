@@ -15,7 +15,7 @@ var divisionRouter = require('./routes/league/division');
 var draftRouter = require('./routes/league/draft');
 var eventRouter = require('./routes/audit/event');
 var game_typeRouter = require('./routes/league/game_type');
-var infoRouter = require('./routes/info');
+var infoRouter = require('./routes/league/info');
 var kill_leadersRouter = require('./routes/kill_leaders');
 var leagueRouter = require('./routes/league/league');
 var player_statsRouter = require('./routes/player_stats');
@@ -38,6 +38,7 @@ app.use('/league/roster', rosterRouter);
 app.use('/league/tier', tierRouter);
 app.use('/league/division', divisionRouter);
 app.use('/league/draft', draftRouter);
+app.use('/league/info', infoRouter);
 app.use('/league/schedule/game_type', game_typeRouter);
 
 //Admin Routes
@@ -52,7 +53,6 @@ app.use('/coach', coachRouter);
 app.use('/coach/alias', aliasRouter);
 
 //Misc Routes
-app.use('/', infoRouter);
 app.use('/kill_leaders', kill_leadersRouter);
 app.use('/player_stats', player_statsRouter);
 app.use('/pokedex', pokedexRouter);

@@ -6,7 +6,7 @@ const PokemonName = ({ pokemon_name }) => {
     }
 
     return (
-        <div className="font-sans" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+        <div className="font-sans text-[#5e5e5e]" style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
             <h2 className="text-lg font-semibold">
                 {pokemon_name}
             </h2>
