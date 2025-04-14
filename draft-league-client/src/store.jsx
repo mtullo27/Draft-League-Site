@@ -6,7 +6,7 @@ import { competitiveSlice } from './slices/competitiveSlice'
 const store = configureStore({
   reducer: { league: leagueSlice.reducer,
     pokedex: pokedexSlice.reducer,
-    competitiveSlice: competitiveSlice.reducer,
+    competitive: competitiveSlice.reducer,
    }
 })
 

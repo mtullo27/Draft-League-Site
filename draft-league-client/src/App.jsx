@@ -11,7 +11,7 @@ import { setTiers } from './slices/leagueSlice'
 import { getPokedex } from './routes/pokedexRoutes'
 import { setPokedexData } from './slices/pokedexSlice'
 
-import { setCompetitiveData, selectCompetitiveData } from './slices/competitiveSlice'
+import { setCompetitiveData } from './slices/competitiveSlice'
 import { getCompetitiveData } from './routes/competitiveRoutes'
 
 
