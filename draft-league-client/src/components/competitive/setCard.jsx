@@ -12,9 +12,9 @@ const SetCard = ({ pokemon }) => {
             .join(" / ");
 
     return (
-        <div className="flex flex-col w-full max-w-md rounded-xl shadow-md p-4 m-2 min-w-[355px]">
+        <div className="flex flex-col items-start w-full max-w-md rounded-xl shadow-md p-4 m-2 min-w-[448px] maxw-[448px] bg-[#222731]">
             {/* Set Name */}
-            <h2 className="text-xl font-bold mb-2">{pokemon.set_name}</h2>
+            <h2 className="text-xl font-bold mb-2 underline">{pokemon.set_name}</h2>
 
             <div className="flex flex-row gap-4 items-start">
                 {/* Sprite */}
@@ -23,7 +23,7 @@ const SetCard = ({ pokemon }) => {
                 </div>
 
                 {/* Set Info */}
-                <div className="flex flex-col space-y-1 text-sm">
+                <div className="flex flex-col items-start space-y-1 text-sm">
                     {/* Name and Item */}
                     <p className="font-semibold">
                         {pokemon.pokemon_name}{pokemon.item ? ` @ ${pokemon.item}` : ""}
@@ -31,32 +31,32 @@ const SetCard = ({ pokemon }) => {
 
                     {/* Ability */}
                     {pokemon.ability && (
-                        <p>Ability: <span className="text-gray-700">{pokemon.ability}</span></p>
+                        <p>Ability: <span >{pokemon.ability}</span></p>
                     )}
 
                     {/* Tera Type */}
                     {pokemon.tera_type && (
-                        <p>Tera Type: <span className="text-gray-700">{pokemon.tera_type}</span></p>
+                        <p>Tera Type: <span>{pokemon.tera_type}</span></p>
                     )}
 
                     {/* EVs */}
                     {pokemon.evs && (
-                        <p>EVs: <span className="text-gray-700">{formatStats(pokemon.evs)}</span></p>
+                        <p>EVs: <span >{formatStats(pokemon.evs)}</span></p>
                     )}
 
                     {/* Nature */}
                     {pokemon.nature && (
-                        <p><span className="text-gray-700">{pokemon.nature} Nature</span></p>
+                        <p><span >{pokemon.nature} Nature</span></p>
                     )}
 
                     {/* IVs (only show if custom) */}
                     {pokemon.ivs && Object.values(pokemon.ivs).some(val => val !== 31) && (
-                        <p>IVs: <span className="text-gray-700">{formatStats(pokemon.ivs)}</span></p>
+                        <p>IVs: <span >{formatStats(pokemon.ivs)}</span></p>
                     )}
 
                     {/* Moves */}
                     {pokemon.moves?.length > 0 && (
-                        <ul className="list-disc list-inside mt-1">
+                        <ul className="list-disc list-inside mt-1 items-start">
                             {pokemon.moves.map((move, idx) => (
                                 <li key={idx}>{move}</li>
                             ))}

@@ -11,7 +11,7 @@ const PokemonCard = ({ pokemon, backgroound }) => {
     }
 
     return (
-        <div className="flex flex-row justify-center items-center rounded-lg shadow-md mt-1 border-solid outline-4 outline-[#5e5e5e]" style={{ backgroundColor: backgroound }}>
+        <div className="flex flex-row justify-center items-center min-w-[300px] max-w-[300px] rounded-lg shadow-md mt-1 border-solid outline-4 outline-[#5e5e5e]" style={{ backgroundColor: backgroound }}>
             <div className="basis-1/3">
                 <PokemonPic src={pokemonData.sprite_url} alt={pokemon.pokemon_name} />
             </div>

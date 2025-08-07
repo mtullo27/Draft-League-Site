@@ -30,7 +30,6 @@ function TiersPage() {
     return (
         <>
             <>
-                <h1>Draft League Client</h1>
                 <TierList pokedex={pokedex} />
             </>
         </>

@@ -5,7 +5,7 @@ const PokemonPic = ({ src, alt }) => {
 
     return (
         <img
-            className="min-w-24 min-h-24"
+            className="min-h-24 max-h-24 "
             src={src}
             alt={alt}
         />
